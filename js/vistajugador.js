@@ -99,8 +99,8 @@ var Vistajugador = (function () {
 			$('#tabla table').append(fila);
 			cont++;
 		});
-		for (var b = 0; b < 6; b++) {
-			var sum=numeros[b]
+		for (var b = 0; b < 7; b++) {
+			var sum=numeros[b];
 			$('#num'+sum).click(function(){
 				for (var i = 0; i < array_jugadores.length	; i++) {
 					varia=$("#turno"+i).is(":visible");
@@ -123,6 +123,39 @@ var Vistajugador = (function () {
 					}
 				}
 			});
+		}
+		for (var b = 0; b < 7; b++) {
+			var sum=numeros[b];
+				var botonSumar=(function(){;
+				for (var i = 0; i < array_jugadores.length	; i++) {
+					varia=$("#turno"+i).is(":visible");
+					numero=$(this).attr("id");
+					suma=parseInt(numero.substr(2,4));
+					sw=0;
+					for (var l = 0; l < array_jugadores.length	; l++) {
+						if($("#"+l+"_"+suma+"check1_2").prop('checked')&&$("#"+l+"_"+suma+"check1_1").prop('checked')&&$("#"+i+"_"+suma+"check1_3").prop('checked')){
+							sw++;
+						}
+					}
+					if(varia==true&&sw!=array_jugadores.length){
+						if($("#"+i+"_"+suma+"check1_2").prop('checked')&&$("#"+i+"_"+suma+"check1_1").prop('checked')&&$("#"+i+"_"+suma+"check1_3").prop('checked')){
+							console.log(suma);
+							$("#num"+suma).addClass("btn-danger");
+						}else{
+							console.log("--"+suma);
+							$("#num"+suma).removeClass("btn-danger");
+						}
+					}
+					if($("#0_"+suma+"check1_2").prop('checked')&&$("#0_"+suma+"check1_1").prop('checked')&&$("#0_"+suma+"check1_3").prop('checked')&&$("#1_"+suma+"check1_2").prop('checked')&&$("#1_"+suma+"check1_1").prop('checked')&&$("#1_"+suma+"check1_3").prop('checked')){
+						console.log("--------"+suma);
+						$("#num"+suma).removeClass("btn-danger");
+					}
+				}
+			});
+
+			$("#0_"+sum+"check1_3").click(botonSumar);
+
+			$("#1_"+sum+"check1_3").click(botonSumar);
 		}
 		
 		$('#boton').click(function(){
