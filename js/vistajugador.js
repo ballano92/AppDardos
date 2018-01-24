@@ -33,11 +33,14 @@ var Vistajugador = (function () {
 				}
 			}
 			$("#button").remove();
-			events.publish("juego", array_jugadores);
+			events.publish("cricket", array_jugadores);
+			// events.publish("juego", array_jugadores);
 			// events.publish("ganador", array_jugadores);
 		});
 	}
 	function cricket(array_jugadores){
+		// quitar la siguiente linea para entrar en seleccion de juegos
+		$("#numerojugadores").hide('fast');	
 		cont3=cont2*3;
 		ronda=0;
 		cont=0;
@@ -48,7 +51,7 @@ var Vistajugador = (function () {
 		if($("#boton"))$("#boton").remove();
 		if($("#rondas"))$("#rondas").remove();
 		if($("#boton_rondas"))$("#boton_rondas").remove();
-		$("#tabla").append('<a name="submit" id="boton" class="btn btn-info">Volver</a><a name="submit" id="boton_rondas" class="btn btn-info" style="float:none">NEXT PLAYER</a><a href="#" id="rondas" class="btn btn-success" name="rondas">'+ronda+'/20</a>');
+		$("#tabla").append('<a name="submit" id="boton" class="btn btn-info">Reiniciar</a><a name="submit" id="boton_rondas" class="btn btn-info" style="float:none">NEXT PLAYER</a><a href="#" id="rondas" class="btn btn-success" name="rondas">'+ronda+'/20</a>');
 		$("#juego").hide('fast');
 		
 		var tabla=$("<table id='table2'>");		
@@ -176,77 +179,82 @@ var Vistajugador = (function () {
 		
 		$('#boton').click(function(){
 			$("#tabla").hide('fast');
-			$("#juego").show('slow');
+			// $("#juego").show('slow');
+			events.publish("cricket", array_jugadores);	
 		});
 		$("#tabla").show('slow');
 		
 	}
-	function sergio(array_jugadores){
-		var cont = 0;
-		var numeros=[20,19,18,17,16,15,25];
-		$(".panel-title").append('<div id="cabecera">Marcador juego Sergio</div>');
-		check="<input type='checkbox' id='check'/>";
-		if($("#tabla"))$("#tabla table").remove();
-		if($("#boton"))$("#boton").remove();
-		$("#tabla").append('<a name="submit" id="boton" style="margin-top:10px" class="btn btn-info">Volver</a>');
-		$("#juego").hide('fast');
-		if($("#rondas"))$("#rondas").remove();	
-		var tabla=$("<table >");
-		$("#tabla").append(tabla);
-		var encabezado=$('#tabla table').append("<tr><th>Jugadores</th><th>/2</th><th>20</th><th>19</th><th>18</th><th>17</th><th>16</th><th>15</th><th>25</th><th>Puntos</th></tr>");		
-		array_jugadores.forEach(function(elementos){
-			elementos.puntos=0;
-			fila=$("<tr id='fila-"+elementos.id+"'><td>"+elementos.nombre+"</td><td><a href='#' id='dividir_"+cont+"' name='dividir' class='btn btn-primary'>/2</a></td><td><a href='#' id='20mas_"+cont+"' name='mas' class='btn btn-primary'>+</a><a href='#' id='20menos_"+cont+"' name='menos' class='btn btn-primary'>-</a></td><td><a href='#' id='19mas_"+cont+"' name='mas' class='btn btn-primary'>+</a><a href='#' id='19menos_"+cont+"' name='menos' class='btn btn-primary'>-</a></td><td><a href='#' id='18mas_"+cont+"' name='mas' class='btn btn-primary'>+</a><a href='#' id='18menos_"+cont+"' name='menos' class='btn btn-primary'>-</a></td><td><a href='#' id='17mas_"+cont+"' name='mas' class='btn btn-primary'>+</a><a href='#' id='17menos_"+cont+"' name='menos' class='btn btn-primary'>-</a></td><td><a href='#' id='16mas_"+cont+"' name='mas' class='btn btn-primary'>+</a><a href='#' id='16menos_"+cont+"' name='menos' class='btn btn-primary'>-</a></td><td><a href='#' id='15mas_"+cont+"' name='mas' class='btn btn-primary'>+</a><a href='#' id='15menos_"+cont+"' name='menos' class='btn btn-primary'>-</a></td><td><a href='#' id='25mas_"+cont+"' name='mas' class='btn btn-primary'>+</a><a href='#' id='25menos_"+cont+"' name='menos' class='btn btn-primary'>-</a></td><td id='puntos"+cont+"'>"+elementos.puntos+"</td>");
-			$('#tabla table').append(fila);		 
-			$('#dividir_'+cont).click(function(){
-				if(elementos.puntos>1){
-					elementos.puntos=elementos.puntos/2;
-					numero=$(this).attr("id");
-					array=numero.split("_");
-					$("#puntos"+array[1]+"").html(elementos.puntos.toFixed());
-				}
-			});
-			for (var e = 0; e <=6; e++) {
-				$('#'+numeros[e]+'mas_'+cont).click(function(){
-					numero=$(this).attr("id");
-					suma=parseInt(numero.substr(0,2));
-					array=numero.split("_");
-					elementos.puntos=elementos.puntos+suma;
-					$("#puntos"+array[1]).html(elementos.puntos.toFixed());
-				});
-				$('#'+numeros[e]+'menos_'+cont).click(function(){
-					numero=$(this).attr("id");
-					resta=parseInt(numero.substr(0,2));
-					array=numero.split("_");
-					if(elementos.puntos>resta-1){	
-						elementos.puntos=elementos.puntos-resta;
-						$("#puntos"+array[1]).html(elementos.puntos.toFixed());
-					}
-				});
-			}
-			cont++;
-		});
-		
-		$('#boton').click(function(){
-			$("#tabla").hide('fast');
-			$("#juego").show('slow');
-		});
-		$("#tabla").show('slow');
 
-	}
+	/*--TODO-- Añadir otro juego aparte del cricket*/
+
+
+	// function sergio(array_jugadores){
+	// 	var cont = 0;
+	// 	var numeros=[20,19,18,17,16,15,25];
+	// 	$(".panel-title").append('<div id="cabecera">Marcador juego Sergio</div>');
+	// 	check="<input type='checkbox' id='check'/>";
+	// 	if($("#tabla"))$("#tabla table").remove();
+	// 	if($("#boton"))$("#boton").remove();
+	// 	$("#tabla").append('<a name="submit" id="boton" style="margin-top:10px" class="btn btn-info">Volver</a>');
+	// 	$("#juego").hide('fast');
+	// 	if($("#rondas"))$("#rondas").remove();	
+	// 	var tabla=$("<table >");
+	// 	$("#tabla").append(tabla);
+	// 	var encabezado=$('#tabla table').append("<tr><th>Jugadores</th><th>/2</th><th>20</th><th>19</th><th>18</th><th>17</th><th>16</th><th>15</th><th>25</th><th>Puntos</th></tr>");		
+	// 	array_jugadores.forEach(function(elementos){
+	// 		elementos.puntos=0;
+	// 		fila=$("<tr id='fila-"+elementos.id+"'><td>"+elementos.nombre+"</td><td><a href='#' id='dividir_"+cont+"' name='dividir' class='btn btn-primary'>/2</a></td><td><a href='#' id='20mas_"+cont+"' name='mas' class='btn btn-primary'>+</a><a href='#' id='20menos_"+cont+"' name='menos' class='btn btn-primary'>-</a></td><td><a href='#' id='19mas_"+cont+"' name='mas' class='btn btn-primary'>+</a><a href='#' id='19menos_"+cont+"' name='menos' class='btn btn-primary'>-</a></td><td><a href='#' id='18mas_"+cont+"' name='mas' class='btn btn-primary'>+</a><a href='#' id='18menos_"+cont+"' name='menos' class='btn btn-primary'>-</a></td><td><a href='#' id='17mas_"+cont+"' name='mas' class='btn btn-primary'>+</a><a href='#' id='17menos_"+cont+"' name='menos' class='btn btn-primary'>-</a></td><td><a href='#' id='16mas_"+cont+"' name='mas' class='btn btn-primary'>+</a><a href='#' id='16menos_"+cont+"' name='menos' class='btn btn-primary'>-</a></td><td><a href='#' id='15mas_"+cont+"' name='mas' class='btn btn-primary'>+</a><a href='#' id='15menos_"+cont+"' name='menos' class='btn btn-primary'>-</a></td><td><a href='#' id='25mas_"+cont+"' name='mas' class='btn btn-primary'>+</a><a href='#' id='25menos_"+cont+"' name='menos' class='btn btn-primary'>-</a></td><td id='puntos"+cont+"'>"+elementos.puntos+"</td>");
+	// 		$('#tabla table').append(fila);		 
+	// 		$('#dividir_'+cont).click(function(){
+	// 			if(elementos.puntos>1){
+	// 				elementos.puntos=elementos.puntos/2;
+	// 				numero=$(this).attr("id");
+	// 				array=numero.split("_");
+	// 				$("#puntos"+array[1]+"").html(elementos.puntos.toFixed());
+	// 			}
+	// 		});
+	// 		for (var e = 0; e <=6; e++) {
+	// 			$('#'+numeros[e]+'mas_'+cont).click(function(){
+	// 				numero=$(this).attr("id");
+	// 				suma=parseInt(numero.substr(0,2));
+	// 				array=numero.split("_");
+	// 				elementos.puntos=elementos.puntos+suma;
+	// 				$("#puntos"+array[1]).html(elementos.puntos.toFixed());
+	// 			});
+	// 			$('#'+numeros[e]+'menos_'+cont).click(function(){
+	// 				numero=$(this).attr("id");
+	// 				resta=parseInt(numero.substr(0,2));
+	// 				array=numero.split("_");
+	// 				if(elementos.puntos>resta-1){	
+	// 					elementos.puntos=elementos.puntos-resta;
+	// 					$("#puntos"+array[1]).html(elementos.puntos.toFixed());
+	// 				}
+	// 			});
+	// 		}
+	// 		cont++;
+	// 	});
+		
+	// 	$('#boton').click(function(){
+	// 		$("#tabla").hide('fast');
+	// 		$("#juego").show('slow');
+	// 	});
+	// 	$("#tabla").show('slow');
+
+	// }
 	
-	function juego(array_jugadores){
-		$("#numerojugadores").hide('fast');		
-		$("#juego").append('<div class="col-xs-12 col-md-5 col-md-offset-1" style="margin: 20px;"><a href="#" id="cricket" class="btn btn-success btn-lg btn-block juego">Cricket</a></div>');
-		$("#juego").append('<div class="col-xs-12 col-md-5 " style="margin: 20px;"><a href="#" id="sergio" class="btn btn-success btn-lg btn-block juego">Sergio</a></div>');
-		$("#juego").show('slow');
-		$('#cricket').click(function(){
-			events.publish("cricket", array_jugadores);
-		});
-		$('#sergio').click(function(){
-			events.publish("sergio", array_jugadores);
-		});
-	}
+	// function juego(array_jugadores){
+	// 	$("#numerojugadores").hide('fast');		
+	// 	$("#juego").append('<div class="col-xs-12 col-md-5 col-md-offset-1" style="margin: 20px;"><a href="#" id="cricket" class="btn btn-success btn-lg btn-block juego">Cricket</a></div>');
+	// 	$("#juego").append('<div class="col-xs-12 col-md-5 " style="margin: 20px;"><a href="#" id="sergio" class="btn btn-success btn-lg btn-block juego">Sergio</a></div>');
+	// 	$("#juego").show('slow');
+	// 	$('#cricket').click(function(){
+	// 		events.publish("cricket", array_jugadores);
+	// 	});
+	// 	$('#sergio').click(function(){
+	// 		events.publish("sergio", array_jugadores);
+	// 	});
+	// }
 	function ganador(array_jugadores){
 		$("#tabla").hide('fast');
 		$("body").addClass("ganador");
@@ -271,8 +279,8 @@ var Vistajugador = (function () {
 			events.subscribe('cricket', cricket);
 			events.subscribe('ganador', ganador);
 			events.subscribe('numerojugadores', numerojugadores ); 
-			events.subscribe('sergio', sergio ); 
-			events.subscribe('juego', juego );
+			// events.subscribe('sergio', sergio ); 
+			// events.subscribe('juego', juego );
 		} 
 	} 
 }());
