@@ -47,7 +47,7 @@ var Vistajugador = (function () {
 		if($("#tabla"))$("#tabla table").remove();
 		if($("#boton"))$("#boton").remove();
 		if($("#rondas"))$("#rondas").remove();
-		if($("#rondasmenos"))$("#rondasmenos").remove();
+		if($("#boton_rondas"))$("#boton_rondas").remove();
 		$("#tabla").append('<a name="submit" id="boton" class="btn btn-info">Volver</a><a name="submit" id="boton_rondas" class="btn btn-info" style="float:none">NEXT PLAYER</a><a href="#" id="rondas" class="btn btn-success" name="rondas">'+ronda+'/20</a>');
 		$("#juego").hide('fast');
 		
