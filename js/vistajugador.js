@@ -53,10 +53,27 @@ var Vistajugador = (function () {
 		
 		var tabla=$("<table id='table2'>");		
 		$("#tabla").append(tabla);
-		$('#boton_rondas').click(function(){			
+		$('#boton_rondas').click(function(){
 			for (var t = 0; t < array_jugadores.length; t++) {
 				varia=$("#turno"+t).is(":visible");
 				if(varia==true){
+					for (var b = 0; b < 7; b++) {
+						var numerosdiana=numeros[b];
+						var clases=$("#cer"+numerosdiana).hasClass("glyphicon glyphicon-remove-circle tachado");	
+						if(t!=array_jugadores.length-1){				
+							if($("#"+(t+1)+"_"+numerosdiana+"check1_2").prop('checked')&&$("#"+(t+1)+"_"+numerosdiana+"check1_1").prop('checked')&&$("#"+(t+1)+"_"+numerosdiana+"check1_3").prop('checked')&&clases==false){
+								$("#num"+numerosdiana).addClass("btn-danger");
+							}else{
+								$("#num"+numerosdiana).removeClass("btn-danger");
+							}
+						}else{
+							if($("#0_"+numerosdiana+"check1_2").prop('checked')&&$("#0_"+numerosdiana+"check1_1").prop('checked')&&$("#0_"+numerosdiana+"check1_3").prop('checked')&&clases==false){
+								$("#num"+numerosdiana).addClass("btn-danger");
+							}else{
+								$("#num"+numerosdiana).removeClass("btn-danger");
+							}
+						}						
+					}
 					if(t!=array_jugadores.length-1){
 						$("#turno"+t).addClass("desaparecer");
 						$("#turno"+(t+1)).removeClass("desaparecer");
@@ -66,6 +83,7 @@ var Vistajugador = (function () {
 						$("#turno0").removeClass("desaparecer");
 						break;
 					}
+					
 				}
 			}
 			click2++;
@@ -79,7 +97,7 @@ var Vistajugador = (function () {
 			}
 		});
 
-		var encabezado=$('#tabla table').append("<tr><td>Jugadores</td><td>Puntos</td><td>Turno</td><td id='num20'>20</td><td id='num19'>19</td><td id='num18'>18</td><td id='num17'>17</td><td id='num16'>16</td><td id='num15'>15</td><td id='num25'>25</td></tr>");		
+		var encabezado=$('#tabla table').append("<tr><td>Jugadores</td><td>Puntos</td><td>Turno</td><td id='num20'>20<span id='cer20'></span></td><td id='num19'>19<span id='cer19'></span></td><td id='num18'>18<span id='cer18'></span></td><td id='num17'>17<span id='cer17'></span></td><td id='num16'>16<span id='cer16'></span></td><td id='num15'>15<span id='cer15'></span></td><td id='num25'>25<span id='cer25'></span></td></tr>");		
 		array_jugadores.forEach(function(elementos){
 			elementos.puntos=0;
 			check="<tr id='fila-"+elementos.id+"'><td class='nombre'>"+elementos.nombre+"</td>";
@@ -133,29 +151,27 @@ var Vistajugador = (function () {
 					suma=parseInt(numero.substr(2,4));
 					sw=0;
 					for (var l = 0; l < array_jugadores.length	; l++) {
-						if($("#"+l+"_"+suma+"check1_2").prop('checked')&&$("#"+l+"_"+suma+"check1_1").prop('checked')&&$("#"+i+"_"+suma+"check1_3").prop('checked')){
+						if($("#"+l+"_"+suma+"check1_2").prop('checked')&&$("#"+l+"_"+suma+"check1_1").prop('checked')&&$("#"+l+"_"+suma+"check1_3").prop('checked')){
 							sw++;
 						}
 					}
 					if(varia==true&&sw!=array_jugadores.length){
 						if($("#"+i+"_"+suma+"check1_2").prop('checked')&&$("#"+i+"_"+suma+"check1_1").prop('checked')&&$("#"+i+"_"+suma+"check1_3").prop('checked')){
-							console.log(suma);
 							$("#num"+suma).addClass("btn-danger");
+							$("#cer"+suma).removeClass("glyphicon glyphicon-remove-circle tachado");
 						}else{
-							console.log("--"+suma);
 							$("#num"+suma).removeClass("btn-danger");
 						}
 					}
-					if($("#0_"+suma+"check1_2").prop('checked')&&$("#0_"+suma+"check1_1").prop('checked')&&$("#0_"+suma+"check1_3").prop('checked')&&$("#1_"+suma+"check1_2").prop('checked')&&$("#1_"+suma+"check1_1").prop('checked')&&$("#1_"+suma+"check1_3").prop('checked')){
-						console.log("--------"+suma);
+					if(sw==array_jugadores.length){
 						$("#num"+suma).removeClass("btn-danger");
+						$("#cer"+suma).addClass("glyphicon glyphicon-remove-circle tachado");
 					}
 				}
 			});
-
-			$("#0_"+sum+"check1_3").click(botonSumar);
-
-			$("#1_"+sum+"check1_3").click(botonSumar);
+			for (var l = 0; l < array_jugadores.length	; l++) {
+				$("#"+l+"_"+sum+"check1_3").click(botonSumar);
+			}
 		}
 		
 		$('#boton').click(function(){
