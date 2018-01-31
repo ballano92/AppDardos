@@ -2,7 +2,9 @@ var Vistajugador = (function () {
 	var ronda = 0;
 	var cont = 0;
 	var click = 0;
-	var cont2=2;
+	var cont2=2;	
+	var numeros=[20,19,18,17,16,15,25];
+	var array_jugadores=[];
 	function numerojugadores(){
 		jugador=Jugador();
 		$("#numerojugadores").append('<br><br><div id="botones"><div id="boton_jugador"><a href="#" id="menos" name="menos" class="glyphicon glyphicon-minus"></a></div><div id="boton_jugador"><a href="#" id="plus" name="mas" class="glyphicon glyphicon-plus"></a></div></div>');
@@ -22,7 +24,6 @@ var Vistajugador = (function () {
 			}
 		});
 		$('#button').click(function(){
-			var array_jugadores=[];
 			for (var i = 0; i < cont2; i++) {
 		       	if('#input'+i){
 		       		var jugador=Jugador();
@@ -45,7 +46,6 @@ var Vistajugador = (function () {
 		ronda=0;
 		cont=0;
 		click2=0;
-		var numeros=[20,19,18,17,16,15,25];
 
 		if($("#tabla"))$("#tabla table").remove();
 		if($("#boton"))$("#boton").remove();
@@ -141,13 +141,16 @@ var Vistajugador = (function () {
 							array_jugadores[i].puntos=puntos;
 							// $("#puntos"+i).html(elementos.puntos);
 						}
+						events.publish("ganar", i);	
+						
+							/*todo**********/
 					}
 				}
 			});
 		}
 		for (var b = 0; b < 7; b++) {
 			var sum=numeros[b];
-				var botonSumar=(function(){;
+			var botonSumar=(function(){
 				for (var i = 0; i < array_jugadores.length	; i++) {
 					varia=$("#turno"+i).is(":visible");
 					numero=$(this).attr("id");
@@ -170,6 +173,7 @@ var Vistajugador = (function () {
 						$("#num"+suma).removeClass("btn-danger");
 						$("#cer"+suma).addClass("glyphicon glyphicon-remove-circle tachado");
 					}
+					events.publish("ganar", i);	
 				}
 			});
 			for (var l = 0; l < array_jugadores.length	; l++) {
@@ -255,6 +259,26 @@ var Vistajugador = (function () {
 	// 		events.publish("sergio", array_jugadores);
 	// 	});
 	// }
+	function ganar(i){
+		var check_ganador=0;
+		for (var c = 0; c <= 7; c++) {							
+			if($("#"+i+"_"+numeros[c]+"check1_1").prop('checked')&&$("#"+i+"_"+numeros[c]+"check1_2").prop('checked')&&$("#"+i+"_"+numeros[c]+"check1_3").prop('checked')){
+				check_ganador++;
+			}
+			if(check_ganador==7){
+				var puntos_altos=0;
+				for (var p = 0; p < array_jugadores.length	; p++) {
+					if(puntos_altos<$("#puntos"+p).html()){
+						puntos_altos=$("#puntos"+p).html();
+					}
+				}
+				if(puntos_altos==$("#puntos"+i).html()){
+					events.publish("ganador", array_jugadores);
+				}
+			}
+		}
+	}
+
 	function ganador(array_jugadores){
 		$("#tabla").hide('fast');
 		$("body").addClass("ganador");
@@ -277,6 +301,7 @@ var Vistajugador = (function () {
 	return { 
 		init: function () {			
 			events.subscribe('cricket', cricket);
+			events.subscribe('ganar', ganar);
 			events.subscribe('ganador', ganador);
 			events.subscribe('numerojugadores', numerojugadores ); 
 			// events.subscribe('sergio', sergio ); 
