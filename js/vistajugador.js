@@ -142,8 +142,6 @@ var Vistajugador = (function () {
 							// $("#puntos"+i).html(elementos.puntos);
 						}
 						events.publish("ganar", i);	
-						
-							/*todo**********/
 					}
 				}
 			});
@@ -168,15 +166,17 @@ var Vistajugador = (function () {
 						}else{
 							$("#num"+suma).removeClass("btn-danger");
 						}
+						events.publish("ganar", i);
 					}
 					if(sw==array_jugadores.length){
 						$("#num"+suma).removeClass("btn-danger");
 						$("#cer"+suma).addClass("glyphicon glyphicon-remove-circle tachado");
-					}
-					events.publish("ganar", i);	
+					}						
 				}
 			});
 			for (var l = 0; l < array_jugadores.length	; l++) {
+				$("#"+l+"_"+sum+"check1_1").click(botonSumar);
+				$("#"+l+"_"+sum+"check1_2").click(botonSumar);
 				$("#"+l+"_"+sum+"check1_3").click(botonSumar);
 			}
 		}
@@ -265,16 +265,16 @@ var Vistajugador = (function () {
 			if($("#"+i+"_"+numeros[c]+"check1_1").prop('checked')&&$("#"+i+"_"+numeros[c]+"check1_2").prop('checked')&&$("#"+i+"_"+numeros[c]+"check1_3").prop('checked')){
 				check_ganador++;
 			}
-			if(check_ganador==7){
-				var puntos_altos=0;
-				for (var p = 0; p < array_jugadores.length	; p++) {
-					if(puntos_altos<$("#puntos"+p).html()){
-						puntos_altos=$("#puntos"+p).html();
-					}
+		}
+		if(check_ganador==7){
+			var puntos_altos=0;
+			for (var p = 0; p < array_jugadores.length	; p++) {
+				if(puntos_altos<$("#puntos"+p).html()){
+					puntos_altos=$("#puntos"+p).html();
 				}
-				if(puntos_altos==$("#puntos"+i).html()){
-					events.publish("ganador", array_jugadores);
-				}
+			}
+			if(puntos_altos==$("#puntos"+i).html()){
+				events.publish("ganador", array_jugadores);
 			}
 		}
 	}
