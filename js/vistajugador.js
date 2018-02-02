@@ -288,10 +288,10 @@ var Vistajugador = (function () {
     		return (b.puntos - a.puntos);
 		});
 		numeros=1;
-		$('#ganador').append('<div style="overflow: hidden"><img src="img/copa2.png" id="img_ganador" style="float: left"><img src="img/copa2.png" id="img_ganador"><p id="nom_ganador">'+numeros+'. '+array_jugadores[0].nombre+' <br> '+array_jugadores[0].puntos+'</p></div>');
+		$('#ganador').append('<div style="overflow: hidden"><img src="img/copa2.png" id="img_ganador" style="float: left"><img src="img/copa2.png" id="img_ganador"><p id="nom_ganador">'+numeros+'. '+array_jugadores[0].nombre+' <br> '+array_jugadores[0].puntos+' pto.</p></div>');
 		lista='<div id="lista"><ul id="lista_final">';
 		array_jugadores.forEach(function(elementos){
-			if(numeros>1)lista=lista+'<li>'+numeros+'. '+elementos.nombre+' - '+elementos.puntos+'</li>';
+			if(numeros>1)lista=lista+'<li>'+numeros+'. '+elementos.nombre+' - '+elementos.puntos+' pto.</li>';
 			numeros++;
 		});
 		lista=lista+'</ul></div><div></div>';

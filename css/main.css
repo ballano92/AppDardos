@@ -165,10 +165,10 @@ div[id^="jugador"]{
     background: url(../img/bang.png) center;
     background-size: 100%;
     height: 34vw;
-    padding-top: 190px;
+    padding-top: 12%;
     float: left;
     font-family: Bungee Shade !important;
-    font-size: 3.5vw;
+    font-size: 3vw;
 }
 #num_ganador{
 	 margin: 5px 47px;
@@ -183,7 +183,7 @@ div[id^="jugador"]{
     font-size: 3.5vw;
 }
 #img_ganador{
-	width: 18vw;
+	width: 17%;
     margin: 10px;
 }
 #texto_ganador{
@@ -197,7 +197,7 @@ div[id^="jugador"]{
 	color: white;
     font-size: 1.5vw;
     width: 215px;
-    margin: -85px auto;
+    margin: -30px auto;
     list-style: none;
 }
 ol {
